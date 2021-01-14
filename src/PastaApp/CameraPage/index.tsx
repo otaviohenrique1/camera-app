@@ -4,6 +4,8 @@ import { Camera } from "expo-camera";
 import styles from "./styles";
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { AntDesign, MaterialIcons, Ionicons } from '@expo/vector-icons';
+import * as Permissions from "expo-permissions";
+import * as MediaLibrary from "expo-media-library";
 
 let camera: Camera | any;
 
@@ -18,6 +20,12 @@ export default function CameraPage() {
             const { status } = await Camera.requestPermissionsAsync();
             setHasPermission(status === 'granted');
         })();
+
+        (async () => {
+            // const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+            const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+            setHasPermission(status === 'granted');
+          })();
     }, []);
 
     if (hasPermission === null) {

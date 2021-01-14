@@ -1,10 +1,12 @@
 import React from 'react';
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from '@react-navigation/stack';
-import CameraPage from './CameraPage';
+// import CameraPage from './CameraPage';
+// import AppTeste from './AppTeste';
+// import AppCamera from '../AppCamera';
 import Home from "./Home";
-import AppTeste from './AppTeste';
-import CameraPreview from './CameraPreview';
+import CameraPage from '../CameraPage2';
+// import CameraPreview from './CameraPreview';
 
 const {Navigator, Screen } = createStackNavigator();
 
@@ -18,9 +20,11 @@ export default function Routes() {
                 headerTintColor: "#ffffff"
             }}>
                 <Screen name="Home" component={Home}/>
-                <Screen name="CameraPage" component={CameraPage}/>
+                {/* <Screen name="CameraPage" component={CameraPage}/>
                 <Screen name="AppTeste" component={AppTeste}/>
-                <Screen name="CameraPreview" component={CameraPreview}/>
+                <Screen name="AppCamera" component={AppCamera}/> */}
+                <Screen name="CameraPage" component={CameraPage}/>
+                {/* <Screen name="CameraPreview" component={CameraPreview}/> */}
             </Navigator>
         </NavigationContainer>
     );
