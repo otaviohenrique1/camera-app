@@ -5,8 +5,6 @@ import { Camera } from "expo-camera";
 import styles from "./styles";
 import CameraPreview from './CameraPreview';
 import { AntDesign, Ionicons, MaterialIcons } from "@expo/vector-icons";
-import * as Permissions from "expo-permissions";
-import * as MediaLibrary from "expo-media-library";
 
 let camera: Camera | any;
 
@@ -16,9 +14,6 @@ export default function CameraPage() {
     const [previewVisible, setPreviewVisible] = useState(false);
     const [capturedImage, setCapturedImage] = useState<any>(null);
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
-    
-    const [hasPermission, setHasPermission] = useState<any>(null);
-    // const [capturedPhoto, setCapturedPhoto] = useState<any>(null);
 
     const __startCamera = async () => {
         const { status } = await Camera.requestPermissionsAsync();
@@ -32,7 +27,7 @@ export default function CameraPage() {
     const __takePicture = async () => {
         if (!camera) return;
         const photo = await camera.takePictureAsync();
-        console.log(photo);
+        // console.log(photo);
         setPreviewVisible(true);
         // setStartCamera(false);
         setCapturedImage(photo);
@@ -57,16 +52,7 @@ export default function CameraPage() {
         }
     }
 
-    const __savePhoto = async () => {
-        const asset = await MediaLibrary.createAssetAsync(capturedImage)
-            .then(() => {
-                // alert('Salvo com sucesso');
-                Alert.alert('Salvo com sucesso');
-            })
-            .catch((error) => {
-                console.log('err', error);
-            });
-    };
+    const __savePhoto = () => {};
 
     const __retakePicture = () => {
         setCapturedImage(null);

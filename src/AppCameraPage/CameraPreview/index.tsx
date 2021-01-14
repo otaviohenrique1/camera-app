@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { View, ImageBackground, TouchableOpacity, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, ImageBackground, TouchableOpacity } from 'react-native';
 import styles from "./styles";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
@@ -10,7 +10,6 @@ interface Props {
 }
 
 const CameraPreview: React.FC<Props> = ({ photo, retakePicture, savePhoto }) => {
-
     return (
         <View style={styles.container}>
             <ImageBackground
