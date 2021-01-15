@@ -10,7 +10,6 @@ interface Props {
 }
 
 const CameraPreview: React.FC<Props> = ({ photo, retakePicture, savePhoto }) => {
-
     return (
         <View style={styles.container}>
             <ImageBackground

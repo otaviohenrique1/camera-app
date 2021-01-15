@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TouchableOpacity, Alert } from 'react-native';
 import { StatusBar } from "expo-status-bar";
 import { Camera } from "expo-camera";
@@ -17,8 +17,8 @@ export default function CameraPage() {
     const [capturedImage, setCapturedImage] = useState<any>(null);
     const [cameraType, setCameraType] = useState(Camera.Constants.Type.back);
     
-    const [hasPermission, setHasPermission] = useState<any>(null);
-    // const [capturedPhoto, setCapturedPhoto] = useState<any>(null);
+    const [hasPermissionLibrary, setHasPermissionLibrary] = useState<any>(null);
+    const [capturedPhoto, setCapturedPhoto] = useState<any>(null);
 
     const __startCamera = async () => {
         const { status } = await Camera.requestPermissionsAsync();
@@ -32,10 +32,11 @@ export default function CameraPage() {
     const __takePicture = async () => {
         if (!camera) return;
         const photo = await camera.takePictureAsync();
-        console.log(photo);
+        // console.log(photo);
         setPreviewVisible(true);
         // setStartCamera(false);
         setCapturedImage(photo);
+        setCapturedPhoto(photo.uri);
     };
 
     const __handleFlashMode = () => {
@@ -57,15 +58,29 @@ export default function CameraPage() {
         }
     }
 
+    useEffect(() => {
+        (async () => {
+            const { status } = await Permissions.askAsync(Permissions.MEDIA_LIBRARY);
+            if(status === 'granted'){
+                setHasPermissionLibrary(true);
+            }else{
+                Alert.alert("Acesso negado");
+            }
+        })();
+    }, []);
+
     const __savePhoto = async () => {
-        const asset = await MediaLibrary.createAssetAsync(capturedImage)
-            .then(() => {
-                // alert('Salvo com sucesso');
-                Alert.alert('Salvo com sucesso');
-            })
-            .catch((error) => {
-                console.log('err', error);
-            });
+        if (hasPermissionLibrary) {
+            const asset = await MediaLibrary.createAssetAsync(capturedPhoto)
+                .then(() => {
+                    // alert('Salvo com sucesso');
+                    Alert.alert('Salvo com sucesso');
+                })
+                .catch((error) => {
+                    Alert.alert(error);
+                    // console.log('err', error);
+                });
+        }
     };
 
     const __retakePicture = () => {
